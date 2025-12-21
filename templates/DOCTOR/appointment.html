@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1">
+    <tr>
+        <th>Patient name</th>
+        <th>Doctor name</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Action</th>
+        </th>
+    </tr>
+    {% for i in doctor %}
+    <tr>
+        <td>{{i.PATIENTID.name}}</td>
+        <td>{{i.DOCTORID.name}}</td>
+        <td>{{i.date}}</td>
+        <td>{{i.time}}</td>
+        <td>{{i.status}}</td>
+   
+        <td>
+            {% if i.status == "appointment" %}
+            <a href="/rejectappointment/{{i.id}}"><button type="submit">reject</button></a>
+
+             {% elif i.status == "rejected" %}
+            <a href="/acceptappointment/{{i.id}}"><button>Accept</button></a>
+         {% else %}
+            <a href="/rejectappointment/{{i.id}}"><button type="submit">reject</button></a></td>
+
+           {% endif %}
+    </tr>
+    {% endfor %}
+</body>
+</html>

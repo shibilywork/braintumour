@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+<label > Name : </label>
+    <input type="text" name="name" value="{{editdr.name}}"><br>
+<label > Phone : </label>
+    <input type="text"  name="phone" value="{{editdr.phone}}"><br>
+<label > Address : </label>
+    <input type="text"  name="address" value="{{editdr.address}}"><br>
+<label > Gender : </label>
+    <input type="text"  name="gender" value="{{editdr.gender}}"><br>
+<label > Specialisation : </label>
+    <input type="text"  name="specialisation"  value="{{editdr.specialisation}}"><br>
+<label > Hospital Name : </label>
+ <select name="hospitalname" id="Hospital"  value="{{editdr.hospitalname}}" >
+
+    <option value="">select hospital</option>
+    <option value="Aster MIMS">Aster MIMS</option>
+    <option value="Baby memorial">Baby memorial</option>
+ </select>
+ <label for="">age</label>
+ <input type="text" name="age" placeholder="enter your age" value="{{editdr.age}}">
+ 
+
+ <button type="submit">submit</button>
+
+</body>
+</html>

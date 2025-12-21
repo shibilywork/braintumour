@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+      {% csrf_token %}
+<label > medicine : </label>
+    <input type="text" name="medicine" value="{{edit.medicine}}"><br>
+<label > description : </label>
+    <input type="text"  name="description" value="{{edit.description}}"><br>
+<label > quantity : </label>
+    <input type="text"  name="quantity" value="{{edit.quantity}}"><br>
+<label > price : </label>
+    <input type="text"  name="price" value="{{edit.price}}"><br>
+
+
+   
+
+ <button type="submit">submit</button>
+
+</body>
+</html>
