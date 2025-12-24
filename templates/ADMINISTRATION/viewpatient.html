@@ -12,6 +12,7 @@
         <th>Age</th>
         <th>Phone</th>
         <th>gender</th>
+        <th>email</th>
         </th>
     </tr>
     {% for i in patients %}
@@ -20,6 +21,8 @@
         <td>{{i.age}}</td>
         <td>{{i.phone}}</td>
         <td>{{i.gender}}</td>
+        <td>{{i.email}}</td>
+
     </tr>
     {% endfor %}
     </table>

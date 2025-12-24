@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
+from braintumourapp.serializer import Appointment_Serializer, Doctor_Serializer, Login_Serializer, Patient_Serializer
+
 from .forms import *
 from braintumourapp.models import *
 
@@ -193,3 +195,77 @@ class AddPrescription(View):
            c.save()
            return redirect('/addprescription')
         
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+class UserReg_api(APIView):
+    def post(self, request):
+        print("###################", request.data)
+
+        user_serial = Patient_Serializer(data=request.data)
+        login_serial = Login_Serializer(data=request.data)
+
+        data_valid = user_serial.is_valid()
+        login_valid = login_serial.is_valid()
+
+        if data_valid and login_valid:
+            login_profile = login_serial.save(usertype='patient')
+
+            # Assign the login profile to the UserTable and save the UserTable
+            user_serial.save(LOGINID=login_profile)
+
+            # Return the serialized user data in the response
+            return Response(user_serial.data, status=status.HTTP_201_CREATED)
+
+        return Response({
+            'login_error': login_serial.errors if not login_valid else None,
+            'user_error': user_serial.errors if not data_valid else None
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginPageAPI(APIView):
+    def post(self, request):
+
+        response_dict = {}
+
+        # Get data from the request
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        # Validate input
+        if not username or not password:
+            response_dict["message"] = "failed"
+            return Response(response_dict, status=status.HTTP_400_BAD_REQUEST)
+
+        # Fetch the user from LoginTable
+        t_user = loginModel.objects.filter(
+            username=username,
+            password=password
+        ).first()
+
+        if not t_user:
+            response_dict["message"] = "failed"
+            return Response(response_dict, status=status.HTTP_401_UNAUTHORIZED)
+
+        else:
+            response_dict["message"] = "success"
+            response_dict["login_id"] = t_user.id
+            response_dict["userType"] = t_user.usertype
+
+        return Response(response_dict, status=status.HTTP_200_OK)
+    
+class ViewDoctorAPI(APIView):
+    def get(self,request):
+        d=doctormodel.objects.all()
+        serializer=Doctor_Serializer(d,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class bookDoctor(APIView):
+    def post( self, request, id):
+        c=patientmodel.objects.get(LOGINID_id=id)
+        serializer=Appointment_Serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(PATIENTID=c, status="pending")
+        return Response(serializer.data, status=status.HTTP_200_OK)

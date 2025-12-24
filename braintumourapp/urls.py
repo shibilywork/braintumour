@@ -44,4 +44,10 @@ urlpatterns = [
     path('addprescription',AddPrescription.as_view(),name='addprescription'),
     path('Addnewnotification',Addnewnotification.as_view(),name='Addnewnotification'),
     path('Addnewpost',Addnewpost.as_view(),name='Addnewpost'),
+    path('loginpageAPI',LoginPageAPI.as_view(),name='loginpageAPI'),
+    path('userregAPI',UserReg_api.as_view(),name='userregAPI'),
+    path('viewdoctorAPI',ViewDoctorAPI.as_view(),name='viewdoctorAPI'),
+    path('bookDoctor/<int:id>',bookDoctor.as_view(),name='bookDoctor'),
+
+
 ]

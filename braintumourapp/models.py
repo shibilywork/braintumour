@@ -19,6 +19,7 @@ class doctormodel(models.Model):
 class patientmodel(models.Model):
     LOGINID=models.ForeignKey(loginModel,on_delete=models.CASCADE,null=True,blank=True)
     name=models.CharField(max_length=100,null=True,blank=True)
+    email=models.CharField(max_length=100,null=True,blank=True)
     phone=models.BigIntegerField(null=True,blank=True)
     age=models.IntegerField(null=True,blank=True)
     gender=models.CharField(max_length=100,null=True,blank=True)
