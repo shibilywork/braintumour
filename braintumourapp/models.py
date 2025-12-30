@@ -54,6 +54,13 @@ class notificationmodel(models.Model):
     notification=models.CharField(max_length=100,null=True,blank=True)
     date=models.DateField(auto_now_add=True)
 
+class complaintmodel(models.Model):
+    PATIENTID=models.ForeignKey(patientmodel,on_delete=models.CASCADE,null=True,blank=True)
+    complaint=models.CharField(max_length=100,null=True,blank=True)
+    date=models.DateField(auto_now_add=True)
+    reply=models.CharField(max_length=100,null=True,blank=True)
 
-
-
+class ReviewModel(models.Model):
+    USERID = models.ForeignKey(patientmodel, on_delete=models.CASCADE, null=True, blank=True)
+    Review = models.CharField(max_length=100, null=True, blank=True)
+    Rating = models.FloatField(null=True, blank=True)

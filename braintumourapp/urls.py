@@ -48,6 +48,10 @@ urlpatterns = [
     path('userregAPI',UserReg_api.as_view(),name='userregAPI'),
     path('viewdoctorAPI',ViewDoctorAPI.as_view(),name='viewdoctorAPI'),
     path('bookDoctor/<int:id>',bookDoctor.as_view(),name='bookDoctor'),
+    path('ViewBookings/<int:id>',ViewBookings.as_view(),name='ViewBookings'),
+    path('ViewComplaint/<int:id>',ViewComplaint.as_view(),name='ViewComplaint'),
+    path('review/<int:id>',ReviewPost.as_view(),name='ViewComplaint'),
+
 
 
 ]

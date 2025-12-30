@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from braintumourapp.serializer import Appointment_Serializer, Doctor_Serializer, Login_Serializer, Patient_Serializer
+from braintumourapp.serializer import Appointment_Serializer, Appointment_Serializer_Hist, Complaint_Serializer, Doctor_Serializer, Login_Serializer, Patient_Serializer, ReviewSerializer
 
 from .forms import *
 from braintumourapp.models import *
@@ -269,3 +269,39 @@ class bookDoctor(APIView):
         if serializer.is_valid():
             serializer.save(PATIENTID=c, status="pending")
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ViewBookings(APIView):
+    def get( self, request, id):
+        c=appointmentmodel.objects.filter(PATIENTID__LOGINID__id=id)
+        serializer=Appointment_Serializer_Hist(c,many=True)
+        print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+class ViewComplaint(APIView):
+    def post(self, request, id):
+        serializer = Complaint_Serializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(
+                PATIENTID=patientmodel.objects.get(LOGINID__id=id)
+            )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, id):
+        c = complaintmodel.objects.filter(PATIENTID__LOGINID__id=id)
+        ser = Complaint_Serializer(c, many=True)
+        print(ser.data)
+        return Response(ser.data, status=status.HTTP_200_OK)
+
+class ReviewPost(APIView):
+    def post(self, request, id):
+        serializer = ReviewSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(
+                USERID=patientmodel.objects.get(LOGINID__id=id)
+            )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
