@@ -60,3 +60,20 @@ class ReviewSerializer(ModelSerializer):
     class Meta:
         model = ReviewModel
         fields = '__all__'
+
+class PostSerializer(ModelSerializer):
+    doc_nme = serializers.CharField(source='DOCTORID.name')
+    class Meta:
+        model = postmodel
+        fields = ['description', 'date', 'image', 'doc_nme']
+
+class MedSerializer(ModelSerializer):
+    class Meta:
+        model = medicinemodel
+        fields = '__all__'
+
+class PresSerializer(ModelSerializer):
+    doc_nme = serializers.CharField(source='DOCTORID.name')
+    class Meta:
+        model = prescriptionmodel
+        fields = ['prescription','medicine', 'doc_nme']

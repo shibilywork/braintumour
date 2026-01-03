@@ -44,6 +44,8 @@ urlpatterns = [
     path('addprescription',AddPrescription.as_view(),name='addprescription'),
     path('Addnewnotification',Addnewnotification.as_view(),name='Addnewnotification'),
     path('Addnewpost',Addnewpost.as_view(),name='Addnewpost'),
+
+
     path('loginpageAPI',LoginPageAPI.as_view(),name='loginpageAPI'),
     path('userregAPI',UserReg_api.as_view(),name='userregAPI'),
     path('viewdoctorAPI',ViewDoctorAPI.as_view(),name='viewdoctorAPI'),
@@ -51,6 +53,10 @@ urlpatterns = [
     path('ViewBookings/<int:id>',ViewBookings.as_view(),name='ViewBookings'),
     path('ViewComplaint/<int:id>',ViewComplaint.as_view(),name='ViewComplaint'),
     path('review/<int:id>',ReviewPost.as_view(),name='ViewComplaint'),
+    path('postapi',ViewPost.as_view()),
+    path('med',ViewMedicine.as_view()),
+    path('pres/<int:id>',PrescriptionView.as_view()),
+
 
 
 

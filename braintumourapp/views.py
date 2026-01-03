@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from braintumourapp.serializer import Appointment_Serializer, Appointment_Serializer_Hist, Complaint_Serializer, Doctor_Serializer, Login_Serializer, Patient_Serializer, ReviewSerializer
+from braintumourapp.serializer import Appointment_Serializer, Appointment_Serializer_Hist, Complaint_Serializer, Doctor_Serializer, Login_Serializer, MedSerializer, Patient_Serializer, PostSerializer, PresSerializer, ReviewSerializer
 
 from .forms import *
 from braintumourapp.models import *
@@ -305,3 +305,24 @@ class ReviewPost(APIView):
                 USERID=patientmodel.objects.get(LOGINID__id=id)
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+class ViewPost(APIView):
+    def get(self, request):
+        c = postmodel.objects.all()
+        ser = PostSerializer(c, many=True)
+        return Response(ser.data, status=status.HTTP_200_OK)
+    
+class ViewMedicine(APIView):
+    def get(self, request):
+        c = medicinemodel.objects.all()
+        ser = MedSerializer(c, many=True)
+        return Response(ser.data, status=status.HTTP_200_OK)
+    
+class PrescriptionView(APIView):
+    def get(self, request, id):
+        print(id)
+        c = prescriptionmodel.objects.filter(PATIENTID__LOGINID__id = id)
+        print(c)
+        ser = PresSerializer(c, many=True)
+        print(ser.data)
+        return Response(ser.data, status=status.HTTP_200_OK)
